@@ -1,0 +1,26 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "First Post",
+      "previewText": "This is our first post!",
+      "thumbnail": "https://images.pexels.com/photos/2176593/pexels-photo-2176593.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-2176593.jpg&fm=jpg"
+    },
+    {
+      "id": "2",
+      "title": "Second Post",
+      "previewText": "This is our second post!",
+      "thumbnail": "https://images.pexels.com/photos/762041/pexels-photo-762041.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-762041.jpg&fm=jpg"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
