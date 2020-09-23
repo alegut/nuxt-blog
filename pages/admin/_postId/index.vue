@@ -1,8 +1,8 @@
 <template>
   <div class="admin-post-page">
-      <section class="update-form">
-          <AdminPostForm :post="loadedPost" @submit="onSubmitted"/>
-      </section>
+    <section class="update-form">
+      <AdminPostForm :post="loadedPost" @submit="onSubmitted" />
+    </section>
   </div>
 </template>
 
@@ -11,28 +11,35 @@ import AdminPostForm from "@/components/Admin/AdminPostForm";
 
 export default {
   layout: "admin",
+  middleware: ['check-auth', 'auth'],
   components: {
     AdminPostForm
   },
   data: () => ({
-      loadedPost: {}
+    loadedPost: {}
   }),
-  fetch() {    
-    console.log('this.$route.params.id', this.$route.params);
-     this.$axios.get(`https://nuxt-blog-3fefa.firebaseio.com/posts/${this.$route.params.postId}.json`).then(res => {
-       this.loadedPost = res.data;
-       console.log(res);
-    });    
+  fetch() {
+    this.$axios
+      .get(process.env.baseUrl + `/posts/${this.$route.params.postId}.json`)
+      .then(res => {
+        this.loadedPost = { ...res.data, postId: this.$route.params.postId };
+      });
   },
   methods: {
     onSubmitted(editedPost) {
-      this.$axios.put(`https://nuxt-blog-3fefa.firebaseio.com/posts/${this.$route.params.postId}.json`, editedPost)
-      this.$router.push('/admin')
+      // this.$axios.put(`https://nuxt-blog-3fefa.firebaseio.com/posts/${this.$route.params.postId}.json`, editedPost)
+      // this.$router.push('/admin')
+      this.$store
+        .dispatch("editPost", {
+          ...editedPost,
+          postId: this.$route.params.postId
+        })
+        .then(() => {
+          this.$router.push("/admin");
+        });
     }
   }
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

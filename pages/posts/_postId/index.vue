@@ -1,26 +1,25 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      {{post.title}}
-      <h1 class="post-title">{{post.title}}</h1>
+      {{ post.title }}
+      <h1 class="post-title">{{ post.title }}</h1>
       <div class="page-details">
-        <div class="post-detail">Last updated on {{post.updatedDate}}</div>
-        <div class="post-detail">Written by {{post.author}}</div>
+        <div class="post-detail">Last updated on {{ post.updatedDate }}</div>
+        <div class="post-detail">Written by {{ post.author }}</div>
       </div>
-      <p class="post-content">{{post.content}}</p>
+      <p class="post-content">{{ post.content }}</p>
     </section>
     <section class="post-feedback">
       <p>
-        {{post.id}}
+        {{ post.postId }}
         Let me know what you think about the post, send a mail to
         <a href="maito:@alegut2005@ukr.net">alegut2005@ukr.net</a>
-      </p>      
+      </p>
     </section>
   </div>
 </template>
 
 <script>
-
 export default {
   // asyncData(context, callback) {
   //   setTimeout(() => {
@@ -31,28 +30,28 @@ export default {
   //         previewText: "This is our first post!",
   //         author: 'Alex',
   //         updatedDate: new Date(),
-  //         content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error exercitationem adipisci assumenda deleniti, rerum dignissimos architecto labore quod laudantium dolorum? Assumenda harum ex reiciendis natus incidunt, repellendus placeat numquam soluta non qui nihil aliquid tempore totam praesentium ipsam, adipisci deleniti?',           
+  //         content: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error exercitationem adipisci assumenda deleniti, rerum dignissimos architecto labore quod laudantium dolorum? Assumenda harum ex reiciendis natus incidunt, repellendus placeat numquam soluta non qui nihil aliquid tempore totam praesentium ipsam, adipisci deleniti?',
   //         thumbnail:
   //           "https://images.pexels.com/photos/2176593/pexels-photo-2176593.jpeg?cs=srgb&dl=pexels-quang-nguyen-vinh-2176593.jpg&fm=jpg"
   //       }
   //     });
   //   }, 1000);
-  // },
-  created() {
-    console.log(this.$route.params.id);
-    // this.$store.dispatch('setPost', this.$route.params.id)
-    
-  },
+  // },  
   data() {
     return {
       post: {}
-    }
+    };
   },
   async fetch() {
-    const post = await this.$axios.get(`https://nuxt-blog-3fefa.firebaseio.com/posts/${this.$route.params.id}.json`);
-    this.post = post.data
-    
-    console.log(this.post);
+    const post = await this.$axios.get(
+      process.env.baseUrl + `/posts/${this.$route.params.postId}.json`
+    );
+    this.post = post.data;
+  },
+  head() {
+    return {
+      title: this.post.title
+    };
   }
 };
 </script>

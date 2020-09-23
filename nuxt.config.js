@@ -1,3 +1,5 @@
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 export default {
   /*
@@ -15,7 +17,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || "",
+    title: "Nuxt blog",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -34,10 +36,13 @@ export default {
       }
     ]
   },
+  loading: { color: "red", height: "5px", duration: 5000 },
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    // '~assets/styles/main.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -60,5 +65,26 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {}
+  build: {},
+  env: {
+    baseUrl: process.env.BASE_URL || "https://nuxt-blog-3fefa.firebaseio.com",
+    fbAPIKey: "AIzaSyCIlUV0briUnhmfaXtJ1BRfs4fDmACZBa4"
+  },
+  router: {
+    middleware: "log"
+  },
+  serverMiddleware: [bodyParser.json(), "~/api"],
+  generate: {
+    routes: function() {
+      return axios
+        .get("https://nuxt-blog-3fefa.firebaseio.com/posts.json")
+        .then(res => {
+          const routes = [];
+          for (const key in res.data) {
+            routes.push('/posts/' + key)
+          }
+          return routes
+        });
+    }
+  }
 };

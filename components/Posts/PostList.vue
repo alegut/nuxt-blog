@@ -2,8 +2,8 @@
   <section class="post-list">
     <PostPreview
       v-for="post of posts"
-      :key="post.id"
-      :id="post.id"
+      :key="post.postId"
+      :postId="post.postId"
       :is-admin="isAdmin"
       :thumbnail="post.thumbnail"
       :title="post.title"

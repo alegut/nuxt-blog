@@ -17,7 +17,7 @@
 export default {
     name: 'PostPreview',
     props: {
-        id: {
+        postId: {
             type: String,
             required: true
         },
@@ -40,7 +40,7 @@ export default {
     },
     computed: {
       postLink() {
-        return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
+        return this.isAdmin ? '/admin/' + this.postId : '/posts/' + this.postId
       }
     }
 }
